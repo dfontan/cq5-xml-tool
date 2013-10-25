@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CQ5 Xml Tool</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link rel="Stylesheet" type="text/css" href="css/tomorrow-night-eighties.css" />
+  <link rel="Stylesheet" type="text/css" href="css/ui.totop.css" />
+  <script type="text/javascript"  src="js/libs/prettify/prettify.js"></script>
+  <style type="text/css">
+    /* Move down content because we have a fixed navbar that is 50px tall */
+    body {
+      padding-top: 50px;
+      padding-bottom: 20px;
+      font-size: 12px;
+    }
+    
+    #footer {
+      margin-top: 20px;
+    }
+    
+    td .table {
+      margin-bottom: 0px;
+    }
+    
+    .modal-body>table,
+    #basicInfomationTabs>div>table {
+      border: 1px solid #dddddd;
+    }
+
+    .m-table tbody > tr > td {
+      vertical-align: middle;
+    }
+    
+    ul.nav-tabs {
+      margin-bottom: 15px;
+    }
+    
+    .breadcrumb > li {
+      display: inline-block;
+    }
+
+    .breadcrumb > script + li:before {
+      padding: 0 5px;
+      color: #cccccc;
+      content: "/\00a0";
+    }
+
+    .breadcrumb > .active {
+      color: #999999;
+    }
+
+    #basicInfomationTabs div>table .form-control{
+      font-size: 12px;
+      border-radius: 0px;
+    }
+
+    .techGroup .table {
+      border: 0px;
+    }
+
+    .techGroup .table td{
+      border-left: 0px;
+      border-bottom: 0px;
+    }
+
+    .m-top {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  
+  <script type="text/x-handlebars" data-template-name="files"> 
+    <div class="container">
+      {{outlet}}
+    </div>
+    <div id="footer">
+      <div class="container">
+        <p class="text-muted credit">iNotes & Sametime : <a href="#">xuhangdl@cn.ibm.com</a></p>
+      </div>
+    </div>
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="files/index">    
+    <div class="row">
+      <div class="col-md-7">
+        <div class="jumbotron">
+          <div class="container">
+            <h1>CQ5 Xml Tool</h1>
+            <p>Still Under development now...</p>
+            <p>
+              {{#view CQ5.FileSelectView}}
+                <input id="lefile" type="file" style="display:none" multiple>                
+              {{/view}}
+              <button type="button" class="btn btn-primary" {{action 'newFile'}}>
+                <span class="glyphicon glyphicon-file"></span> New
+              </button>
+              <button type="button" class="btn btn-warning" onclick="$('input[id=lefile]').click();">
+                <span class="glyphicon glyphicon-open"></span> Open
+              </button>
+              <button type="button" class="btn btn-success" {{action 'fileDownload'}}>
+                <span class="glyphicon glyphicon-download-alt"></span> Save
+              </button>
+            </p>
+          </div>
+        </div>
+
+        <div id="messages">
+        </div>
+      </div>
+      <div class="col-md-5">
+        {{#if hasFile}}
+          <table class="table table-bordered table-hover table-striped m-table">
+            <thead>
+              <tr>
+                <th>File Name</th>
+                <th>Locale</th>
+                <th style="width: 60px;"> </th>
+                <th style="width: 60px;"> </th>
+                <th style="width: 60px;"> </th>
+                <th style="width: 60px;"> </th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each}}
+                <tr>
+                  <td>{{name}}</td>
+                  <td>{{locale}}</td>
+                  <td>
+                    {{#link-to 'file.index' this}}
+                      <button type="button" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-align-left"></span> View
+                      </button>
+                    {{/link-to}}
+                  </td>
+                  <td>
+                    {{#link-to 'file.xml' this}}
+                      <button type="button" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-search"></span> XML
+                      </button>
+                    {{/link-to}}
+                  </td>
+                  <td>
+                    {{#link-to 'file.edit' this}}
+                      <button type="button" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-edit"></span> Edit
+                      </button>
+                    {{/link-to}}
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-default btn-xs" {{action 'delFile' this}}>
+                      <span class="glyphicon glyphicon-trash"></span> Del
+                    </button>
+                  </td>
+                </tr>
+              {{/each}}
+            <tbody>
+          </table>
+        {{else}}
+          <div class="alert alert-info">
+            <p>Oops! Please select or create a file.</p>
+          </div>
+        {{/if}}
+        
+      </div>
+    </div> 
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="file">
+    {{outlet}} 
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="nav">
+    {{#link-to 'files.index'}}
+      <button type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-list-alt"></span> Select File
+      </button>
+    {{/link-to}}
+    
+    {{#link-to 'file.index' this}}
+      <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-align-left"></span> View
+      </button>
+    {{/link-to}}
+    
+    {{#link-to 'file.edit' this}}
+      <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-edit"></span> Edit
+      </button>
+    {{/link-to}}
+    
+    {{#link-to 'file.xml' this}}
+      <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-search"></span> Xml
+      </button>
+    {{/link-to}}
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="file/edit">
+    {{render "nav" this}}
+    
+    <h2><span class="glyphicon glyphicon-edit"></span> Edit</h2>
+
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#basicInfomation" data-toggle="tab">Basic Infomation</a></li>
+      <li><a href="#features" data-toggle="tab">Features</a></li>
+      <li><a href="#generalData" data-toggle="tab">GeneralData</a></li>
+      <li><a href="#marketingDescription" data-toggle="tab">Marketing Description</a></li>
+      <li><a href="#getInspired" data-toggle="tab">GetInspired</a></li>
+      <li><a href="#accessory" data-toggle="tab">Accessory</a></li>
+      <li><a href="#keyTechnicalFeature" data-toggle="tab">Key Technical Feature</a></li>
+      <li><a href="#faceted" data-toggle="tab">Faceted</a></li>
+      <li><a href="#variation" data-toggle="tab">Variation</a></li>
+      <li><a href="#technicalFeature" data-toggle="tab">Technical Feature</a></li>
+    </ul>
+
+    <div class="tab-content" id="basicInfomationTabs">
+      <div class="tab-pane active" id="basicInfomation">
+        {{render "nodesBasicEditTable" basicInfomation}}
+      </div>
+      <div class="tab-pane" id="features">
+        {{render "nodesBasicEditTable" features}}
+      </div>
+      <div class="tab-pane" id="generalData">
+        {{render "nodesBasicEditTable" generalData}}
+      </div>
+      <div class="tab-pane" id="marketingDescription">
+        {{render "nodesBasicEditTable" marketingDescription}}
+      </div>
+      <div class="tab-pane" id="getInspired">
+        {{render "nodesBasicEditTable" getInspired}}
+      </div>
+      <div class="tab-pane" id="accessory">
+        {{render "nodesBasicEditTable" accessory}}
+      </div>
+      <div class="tab-pane" id="keyTechnicalFeature">
+        {{render "nodesBasicEditTable" keyTechnicalFeature}}
+      </div>
+      <div class="tab-pane" id="faceted">
+        {{render "nodesBasicEditTable" faceted}}
+      </div>
+      <div class="tab-pane" id="variation">
+        {{render "nodesBasicEditTable" variation}}
+      </div>
+      <div class="tab-pane" id="technicalFeature">
+        {{render "nodesTechEditTable" techRecords}}
+      </div>
+    </div>    
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="file/index">
+    {{render "nav" this}}
+    
+    <h2><span class="glyphicon glyphicon-align-left"></span> View</h2>
+    {{#if isBlank}}
+      <div class="alert alert-info m-top">
+        <strong>Hi, nothing went wrong, but there is nothing to show either.</strong>
+      </div>
+    {{/if}}
+    
+    {{#if category.isShow}}
+      <ol class="breadcrumb">
+        <span><strong>PIERS Path:</strong></span>
+        {{#each category.data}}
+          {{#if nodeContent}}
+            <li><i>{{nodeContent}}</i></li>
+          {{/if}}
+        {{/each}}
+      </ol>   
+    {{/if}}
+    
+    {{#if basicInfomation.isShow}}
+      {{render "nodesBasicViewTable" basicInfomation.data}}
+    {{/if}}
+
+    {{#if path.isShow}}
+      <div class="well well-sm">
+        <strong>DAM Link</strong><br><span class="text-primary">{{path.data.dam}}</span><br><br>
+        <strong>PIM Link</strong><br><span class="text-primary">{{path.data.pim}}</span>
+      </div>
+    {{/if}}
+    
+    {{#if features.isShow}}
+      <h2><span class="glyphicon glyphicon-camera"></span> Features </h2>
+      {{render "featureTabs" features.data}}
+    {{/if}}
+    
+    {{#if specifications.isShow}}
+      <h2><span class="glyphicon glyphicon-picture"></span> Specification </h2>
+      {{render "nodesBasicViewTable" specifications.data}}
+    {{/if}}
+    
+    <!-- Button trigger modal -->
+    {{#if seeAllSpecs.isShow}}
+      <a data-toggle="modal" href="#seeAll" class="btn btn-primary btn-lg">SEE ALL SPECS</a>
+    {{/if}}
+
+    <!-- Modal -->
+    <div class="modal fade" id="seeAll" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="width: 976px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Tech Infomation</h4>
+          </div>
+          <div class="modal-body">
+            {{render "nodesTechView" seeAllSpecs.data}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    
+    {{#if getInspired.isShow}}
+      <h2><span class="glyphicon glyphicon-facetime-video"></span> Get Inspired </h2>
+      {{render "nodesBasicViewTable" getInspired.data}}
+    {{/if}}    
+    
+    {{#if accessoryItems.isShow}}
+      <h2><span class="glyphicon glyphicon-paperclip"></span> Accessories Items</h2>
+      {{render "accessoryItems" accessoryItems.data}}
+    {{/if}}
+
+    {{#if accessoryCategories.isShow}}
+      <h2><span class="glyphicon glyphicon-paperclip"></span> Accessories Categories</h2>
+      {{render "accessoryCategories" accessoryCategories.data}}
+    {{/if}}    
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="featureTabs">    
+    <ul class="nav nav-tabs">
+      {{#each}}
+        <li {{bind-attr class="isActive:active"}}>
+          <a {{bind-attr href=href}} data-toggle="tab">
+            {{sectorName}}
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+
+    <div class="tab-content">
+      {{#each}}
+        <div {{bind-attr class="isActive:active :tab-pane"}} {{bind-attr id=id}}>
+          <div class="well well-sm"><strong>Sub Menu Title</strong><br>{{sectorName}}</div>
+          
+          {{#each factors}}
+            <div class="panel panel-primary">
+              <div class="panel-heading">{{factorName}}</div>
+              <div class="panel-body">
+                {{factorID}}
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{/each}}
+    </div>
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="accessoryItems">
+    <ul class="list-group">
+      {{#each}}
+        <li class="list-group-item">
+          <h4 class="list-group-item-heading">{{accessoryModelNumber}}</h4>
+          <p class="list-group-item-text">{{accessoryImage}}</p>
+          <p class="list-group-item-text"><br />{{accessoryText}}</p>
+        </li>
+      {{/each}}
+    </ul>    
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="accessoryCategories">
+    <ul class="list-group">
+      {{#each}}
+        <li class="list-group-item">
+          <h4 class="list-group-item-heading">{{accessoryCategoryTitle}}</h4>
+          <p class="list-group-item-text">{{accessoryCategoryID}}</p>
+        </li>
+      {{/each}}
+    </ul>
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="file/xml">
+    {{render "nav" this}}
+    
+    {{#view CQ5.RawXmlString}}
+      <h2>Converted Xml String</h2>    
+      <pre id="xmlCode" class="prettyprint Lang-xml">{{convertedXmlString}}</pre>
+    {{/view}}
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="nodesBasicViewTable">
+    <table class="table table-bordered table-hover table-striped">
+      <tbody>
+        {{#each nodesWithoutBlank}}
+          <tr {{bind-attr id=nodeName}}>
+            <td style="width: 199px;">{{attributeName}}</td>
+            <td style="border: 1px solid #dddddd;">{{#if isData}}{{nodeContent}}{{else}}{{render "nodesBasicViewTable" childrenNode}}{{/if}}</td>
+          </tr>
+        {{/each}}
+      <tbody>
+    </table>
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="nodesTechView">
+    <table class="table table-hover">
+      <tbody>
+        {{#each records}}
+          <tr>
+            <td style="padding: 0px; border: 0px;">
+              <table class="table table-hover table-striped" {{bind-attr style=tableStyle}}>
+                <tbody>
+                  <tr>                    
+                    <td {{bind-attr style=tdStyle}}>{{transAttributeName}}</td>            
+                    {{#if isData}}
+                      <td style="border: 0px;">
+                      {{nodeContent}}
+                      </td>
+                    {{else}}
+                      <td style="border: 0px; padding: 0px;">
+                      {{render "nodesTechView" childrenNode}}
+                      </td>
+                    {{/if}}
+                  </tr>
+                <tbody>
+              </table>
+            </td>
+          </tr>
+        {{/each}}
+      <tbody>
+    </table>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="nodesBasicEditTable">
+    <table class="table table-hover">
+      <tbody>
+        {{#each records}}
+          <tr>
+            <td style="padding: 0px; border: 0px;">
+              <table class="table table-hover table-striped" {{bind-attr style=tableStyle}}>
+                <tbody>
+                  <tr>                    
+                    <td {{bind-attr style=tdStyle}}>{{attributeName}}</td>            
+                    {{#if isData}}
+                      <td style="border: 0px;" {{bind-attr class="isError:has-error isAlert:has-warning"}}>
+                      {{cq5-textfield class="form-control" value=nodeContent placeholder="..."}}
+                      </td>
+                    {{else}}
+                      <td style="border: 0px; padding: 0px;">
+                      {{render "nodesBasicEditTable" childrenNode}}
+                      </td>
+                    {{/if}}
+                  </tr>
+                <tbody>
+              </table>
+            </td>
+          </tr>
+        {{/each}}
+      <tbody>
+    </table>
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="nodesTechEditTable">
+    <table class="table table-bordered table-hover table-striped">
+      <thead>
+        <tr class="success">
+          <td style="width: 199px;">{{cq5-textfield class="form-control" value=newTransAttributeName placeholder="Trans Attr"}}</td>
+          <td>{{cq5-textfield class="form-control" value=newNodeContent placeholder="Content"}}</td>
+          <td style="width: 30px;"><button type="button" class="btn btn-primary" {{action 'addNode' this}}>+</button></td>
+        </tr>
+      </thead>
+      <tbody class="sortable">
+        {{#each}}
+          <tr class="item" data-id="{{unbound id}}">
+            <td>{{cq5-textfield class="form-control" value=transAttributeName placeholder="..."}}</td>            
+            {{#if isData}}
+              <td>
+              {{cq5-textfield class="form-control" value=nodeContent placeholder="..."}}
+              </td>
+            {{else}}
+              <td style="padding: 0px;" class="techGroup">
+              {{render "nodesTechEditTable" childrenNode}}
+              </td>
+            {{/if}}            
+            <td>
+              <button type="button" class="btn btn-danger" {{action 'delNode' this}}>-</button>
+            </td>
+          </tr>
+        {{/each}}
+      <tbody>
+    </table>
+  </script>
+
+  <script src="js/libs/jquery-1.9.1.js"></script>
+  <script src="js/libs/jquery-ui.js"></script>
+  <script src="js/libs/handlebars-1.0.0.js"></script>
+  <script src="js/libs/ember.prod.js"></script>
+  <script src="js/libs/ember-data.js"></script>
+  <script src="js/libs/localstorage_adapter.js"></script>
+  <script src="js/libs/bootstrap.js"></script>
+  <script src="js/libs/underscore.js"></script>
+  <script src="js/libs/jszip.js"></script>
+  <script src="js/libs/uuid.js"></script>
+  <script src="js/libs/mousetrap.min.js"></script>
+  <script src="js/libs/vkbeautify.js"></script>
+  <script src="js/libs/jquery.ui.totop.js"></script>
+
+  <script src="js/app.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/controller.js"></script>
+  <script src="js/model.js"></script>
+  <script src="js/view.js"></script>
+
+  <script type="text/javascript">
+    // Back to top plugin
+    $().UItoTop({ easingType: 'easeOutQuart' });
+  </script>
+  
+  <script src="js/locale/ru_ru.js"></script>
+  <script src="js/locale/eu.js"></script>
+</body>
+</html>
