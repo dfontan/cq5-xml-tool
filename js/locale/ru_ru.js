@@ -96,8 +96,8 @@ CQ5.localeManager.register(
               isData: false,
               isAllowBlank: true,
               isAlertBlank: false,
-              nodeName: 't' + uniqueID.replace(/-/g,""),
-              attributeName: 't' + uniqueID.replace(/-/g,""),
+              nodeName: 'TechnicalFeature' + fileRecord.get('technicalFeatureMaxIndex'),
+              attributeName: 'TechnicalFeature' + fileRecord.get('technicalFeatureMaxIndex'),
               transAttributeName: $(this).find("groupName").text(),
               dataType: "string",
             });
@@ -115,15 +115,19 @@ CQ5.localeManager.register(
               isData: true,
               isAllowBlank: true,
               isAlertBlank: false,
-              nodeName: 't' + uniqueID.replace(/-/g,""),
-              attributeName: 't' + uniqueID.replace(/-/g,""),
+              nodeName: 'TechnicalFeature' + fileRecord.get('technicalFeatureMaxIndex'),
+              attributeName: 'TechnicalFeature' + fileRecord.get('technicalFeatureMaxIndex'),
               transAttributeName: $(this).find("featureName").text(),
               dataType: "string",
               nodeContent: $(this).find("featureValue").text()
             });
             record.get("childrenNode").addRecord(newRecord);
             fileRecord.get("nodes").addRecord(newRecord);
+          } else {
+            return;
           }
+
+          fileRecord.set('technicalFeatureMaxIndex', fileRecord.get('technicalFeatureMaxIndex') + 1);
         });
       };
       

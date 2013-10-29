@@ -19,6 +19,8 @@ CQ5.File = DS.Model.extend({
 
   xmlString: DS.attr('string'),
 
+  technicalFeatureMaxIndex: DS.attr('number'),
+
   convertedXmlString: function() {
     xmlDocument = document.implementation.createDocument("", "", null);
 

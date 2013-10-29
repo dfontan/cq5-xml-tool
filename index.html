@@ -88,7 +88,7 @@
         <div class="jumbotron">
           <div class="container">
             <h1>CQ5 Xml Tool</h1>
-            <p>Still Under development now...</p>
+
             <p>
               {{#view CQ5.FileSelectView}}
                 <input id="lefile" type="file" style="display:none" multiple>                
@@ -396,8 +396,8 @@
       <tbody>
         {{#each nodesWithoutBlank}}
           <tr {{bind-attr id=nodeName}}>
-            <td style="width: 199px;">{{attributeName}}</td>
-            <td style="border: 1px solid #dddddd;">{{#if isData}}{{nodeContent}}{{else}}{{render "nodesBasicViewTable" childrenNode}}{{/if}}</td>
+            <td style="width: 199px;">{{{attributeName}}}</td>
+            <td style="border: 1px solid #dddddd;">{{#if isData}}{{{nodeContent}}}{{else}}{{render "nodesBasicViewTable" childrenNode}}{{/if}}</td>
           </tr>
         {{/each}}
       <tbody>
@@ -413,10 +413,10 @@
               <table class="table table-hover table-striped" {{bind-attr style=tableStyle}}>
                 <tbody>
                   <tr>                    
-                    <td {{bind-attr style=tdStyle}}>{{transAttributeName}}</td>            
+                    <td {{bind-attr style=tdStyle}}>{{{transAttributeName}}}</td>            
                     {{#if isData}}
                       <td style="border: 0px;">
-                      {{nodeContent}}
+                      {{{nodeContent}}}
                       </td>
                     {{else}}
                       <td style="border: 0px; padding: 0px;">
@@ -518,6 +518,7 @@
     $().UItoTop({ easingType: 'easeOutQuart' });
   </script>
   
+  <!-- Configuration of Convert Feature -->
   <script src="js/locale/ru_ru.js"></script>
   <script src="js/locale/eu.js"></script>
 </body>

@@ -58,7 +58,8 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
 
   createFileRecord: function(xmlString) {
     return  this.get("store").createRecord('file', {
-      xmlString: xmlString
+      xmlString: xmlString,
+      technicalFeatureMaxIndex: 0
     });
   },
 
@@ -628,6 +629,10 @@ CQ5.NodesTechEditTableController = Ember.ArrayController.extend({
   newNodeContent: "",
   actions: {
     addNode: function(childrenNode) {
+      if (this.get("newTransAttributeName") === "") {
+        alert('The "Trans Attr" field can not be left blank.');
+        return;
+      }
       var fileRecord = childrenNode.get("owner").get("file");
       var uniqueID = uuid.v4();
       var nodeRecord = this.get("store").createRecord('node', {
@@ -645,12 +650,14 @@ CQ5.NodesTechEditTableController = Ember.ArrayController.extend({
         isAlertBlank: false,
         nodeType: this.get("newNodeContent") ? "data" : "dataGroup",
         isData: this.get("newNodeContent") !== "",
-        nodeName: 't' + uniqueID.replace(/-/g,""),
-        attributeName: 't' + uniqueID.replace(/-/g,""),
+        nodeName: 'TechnicalFeature' + fileRecord.get('technicalFeatureMaxIndex'),
+        attributeName: 'TechnicalFeature' + fileRecord.get('technicalFeatureMaxIndex'),
         transAttributeName: this.get("newTransAttributeName"),
         dataType: "string",
         nodeContent: this.get("newNodeContent")
       });
+
+      fileRecord.set('technicalFeatureMaxIndex', fileRecord.get('technicalFeatureMaxIndex') + 1);
       
       childrenNode.addRecord(nodeRecord);
       fileRecord.get("nodes").addRecord(nodeRecord);

@@ -99,7 +99,7 @@ CQ5.NodesTechEditTableView = Ember.View.extend({
 
 CQ5.FileEditView = Ember.View.extend({
   didInsertElement: function() {
-    this.$("td > input").change(function() {
+    this.$("table").on('change', "tr input", function() {
       $(this).val($(this).val().replace(/(^[\s\/]*)|(\s*$)/g, ""));
 
       var punctuationPatten = /([\uFF0C\u3002\uFF1F\uFF1A\uFF1B\u2018\u2019\uFF01\u201C\u201D\u2014\u2026\u2026\u3001\uFF0D\uFF08\uFF09\u3010\u3011\u300A\u300B]+)/g;
