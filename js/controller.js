@@ -439,7 +439,7 @@ CQ5.FileIndexController = Ember.ObjectController.extend({
     damPath += smn.slice(0, 2) + "/";
     damPath += smn.slice(0, 6) + "/" + smn;
 
-    pimPath += "/content/dam/pim/";
+    pimPath += "/content/pim/";
     pimPath += locale.split("_")[0] + "/" + locale.split("_")[1] + "/";
     pimPath += smn.slice(0, 2) + "/";
     pimPath += smn.slice(0, 6) + "/" + smn;

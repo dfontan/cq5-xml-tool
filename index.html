@@ -3,74 +3,13 @@
 <head>
   <title>CQ5 Xml Tool</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-  <link rel="Stylesheet" type="text/css" href="css/tomorrow-night-eighties.css" />
-  <link rel="Stylesheet" type="text/css" href="css/ui.totop.css" />
-  <script type="text/javascript"  src="js/libs/prettify/prettify.js"></script>
-  <style type="text/css">
-    /* Move down content because we have a fixed navbar that is 50px tall */
-    body {
-      padding-top: 50px;
-      padding-bottom: 20px;
-      font-size: 12px;
-    }
-    
-    #footer {
-      margin-top: 20px;
-    }
-    
-    td .table {
-      margin-bottom: 0px;
-    }
-    
-    .modal-body>table,
-    #basicInfomationTabs>div>table {
-      border: 1px solid #dddddd;
-    }
-
-    .m-table tbody > tr > td {
-      vertical-align: middle;
-    }
-    
-    ul.nav-tabs {
-      margin-bottom: 15px;
-    }
-    
-    .breadcrumb > li {
-      display: inline-block;
-    }
-
-    .breadcrumb > script + li:before {
-      padding: 0 5px;
-      color: #cccccc;
-      content: "/\00a0";
-    }
-
-    .breadcrumb > .active {
-      color: #999999;
-    }
-
-    #basicInfomationTabs div>table .form-control{
-      font-size: 12px;
-      border-radius: 0px;
-    }
-
-    .techGroup .table {
-      border: 0px;
-    }
-
-    .techGroup .table td{
-      border-left: 0px;
-      border-bottom: 0px;
-    }
-
-    .m-top {
-      margin-top: 20px;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="css/tomorrow-night-eighties.css" />
+  <link rel="stylesheet" type="text/css" href="css/ui.totop.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />  
 </head>
-<body>
-  
+<body>  
   <script type="text/x-handlebars" data-template-name="files"> 
     <div class="container">
       {{outlet}}
@@ -493,19 +432,20 @@
     </table>
   </script>
 
-  <script src="js/libs/jquery-1.9.1.js"></script>
+  <script src="js/libs/jquery.js"></script>
   <script src="js/libs/jquery-ui.js"></script>
   <script src="js/libs/handlebars-1.0.0.js"></script>
   <script src="js/libs/ember.prod.js"></script>
   <script src="js/libs/ember-data.js"></script>
   <script src="js/libs/localstorage_adapter.js"></script>
-  <script src="js/libs/bootstrap.js"></script>
+  <script src="js/libs/bootstrap.min.js"></script>
   <script src="js/libs/underscore.js"></script>
   <script src="js/libs/jszip.js"></script>
   <script src="js/libs/uuid.js"></script>
   <script src="js/libs/mousetrap.min.js"></script>
   <script src="js/libs/vkbeautify.js"></script>
   <script src="js/libs/jquery.ui.totop.js"></script>
+  <script src="js/libs/prettify/prettify.js"></script>
 
   <script src="js/app.js"></script>
   <script src="js/router.js"></script>
