@@ -161,7 +161,7 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
 
         if (files.get("length") > 0) {
           var content = zip.generate();
-          location.href="data:application/zip;base64,"+content;
+          location.href="data:application/zip;base64," + content;
           $("#messages").prepend('<div class="alert alert-success"><strong>Zip file has generated!</strong></div>');
         }        
       });

@@ -3,11 +3,7 @@
 <head>
   <title>CQ5 Xml Tool</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="css/normalize.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="css/tomorrow-night-eighties.css" />
-  <link rel="stylesheet" type="text/css" href="css/ui.totop.css" />
-  <link rel="stylesheet" type="text/css" href="css/style.css" />  
+  <link rel="stylesheet" type="text/css" href="css/app.min.css" media="screen">
 </head>
 <body>  
   <script type="text/x-handlebars" data-template-name="files"> 
@@ -27,7 +23,6 @@
         <div class="jumbotron">
           <div class="container">
             <h1>CQ5 Xml Tool</h1>
-
             <p>
               {{#view CQ5.FileSelectView}}
                 <input id="lefile" type="file" style="display:none" multiple>                
@@ -38,9 +33,12 @@
               <button type="button" class="btn btn-warning" onclick="$('input[id=lefile]').click();">
                 <span class="glyphicon glyphicon-open"></span> Open
               </button>
-              <button type="button" class="btn btn-success" {{action 'fileDownload'}}>
+              <a id="fileDownload" type="button" class="btn btn-success" {{action 'fileDownload'}}>
                 <span class="glyphicon glyphicon-download-alt"></span> Save
-              </button>
+              </a>
+              <a href="#" id="blob" class="btn btn-success">
+                <span class="glyphicon glyphicon-download-alt"></span> Save
+              </a>
             </p>
           </div>
         </div>
@@ -432,34 +430,15 @@
     </table>
   </script>
 
-  <script src="js/libs/jquery.js"></script>
-  <script src="js/libs/jquery-ui.js"></script>
-  <script src="js/libs/handlebars-1.0.0.js"></script>
-  <script src="js/libs/ember.prod.js"></script>
-  <script src="js/libs/ember-data.js"></script>
-  <script src="js/libs/localstorage_adapter.js"></script>
-  <script src="js/libs/bootstrap.min.js"></script>
-  <script src="js/libs/underscore.js"></script>
-  <script src="js/libs/jszip.js"></script>
-  <script src="js/libs/uuid.js"></script>
-  <script src="js/libs/mousetrap.min.js"></script>
-  <script src="js/libs/vkbeautify.js"></script>
-  <script src="js/libs/jquery.ui.totop.js"></script>
-  <script src="js/libs/prettify/prettify.js"></script>
+  <script src="js/app.min.js"></script>
 
-  <script src="js/app.js"></script>
-  <script src="js/router.js"></script>
-  <script src="js/controller.js"></script>
-  <script src="js/model.js"></script>
-  <script src="js/view.js"></script>
+  <!-- Configuration files of Convert Feature -->
+  <script src="js/locale/ru_ru.js"></script>
+  <script src="js/locale/eu.js"></script>
 
   <script type="text/javascript">
     // Back to top plugin
     $().UItoTop({ easingType: 'easeOutQuart' });
   </script>
-  
-  <!-- Configuration of Convert Feature -->
-  <script src="js/locale/ru_ru.js"></script>
-  <script src="js/locale/eu.js"></script>
 </body>
 </html>

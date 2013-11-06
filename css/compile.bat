@@ -1,0 +1,1 @@
+type normalize.css bootstrap.min.css tomorrow-night-eighties.css ui.totop.css style.css | cleancss -o app.min.css
