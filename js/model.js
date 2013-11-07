@@ -14,7 +14,7 @@ CQ5.File = DS.Model.extend({
       }
     });
 
-    return (SMN !== "" ? SMN : "###") + "_" + this.get("locale").toLowerCase() + ".xml";
+    return (SMN !== "" ? SMN : "###") + "_" + this.get("locale").toLowerCase();
   }.property("nodes.@each.nodeContent"),
 
   xmlString: DS.attr('string'),
@@ -22,7 +22,7 @@ CQ5.File = DS.Model.extend({
   technicalFeatureMaxIndex: DS.attr('number'),
 
   convertedXmlString: function() {
-    xmlDocument = document.implementation.createDocument("", "", null);
+    var xmlDocument = document.implementation.createDocument("", "", null);
 
     var createXmlElement = function(nodeRecord) {
       var element = xmlDocument.createElement(nodeRecord.get("nodeType"));
@@ -57,7 +57,7 @@ CQ5.File = DS.Model.extend({
         });        
       }
       return element;
-    }
+    };
 
     var rootNodeRecord = this.get("nodes").findProperty("nodeType", "ItemContents");
     xmlDocument.appendChild(createXmlElement(rootNodeRecord));   
@@ -66,6 +66,47 @@ CQ5.File = DS.Model.extend({
     var beautifiedString = vkbeautify.xml('<?xml version="1.0" encoding="UTF-8"?>' + (new XMLSerializer()).serializeToString(xmlDocument));
     
     return beautifiedString;
+  }.property(
+    "nodes.@each.index",
+    "nodes.@each.attributeName",
+    "nodes.@each.transAttributeName",
+    "nodes.@each.dataType",
+    "nodes.@each.nodeContent"
+  ),
+
+  csvString: function() {
+    var csvString = '', content = "";
+
+    var append = function(nodeRecord) {
+      if (nodeRecord.get("transAttributeName") !== undefined) {
+        if (nodeRecord.get("nodeContent") === null) {
+          content = "";
+        } else {
+          content = nodeRecord.get("nodeContent").replace("\"", "\"\"");
+        }
+
+        csvString += "\"" + (nodeRecord.get("transAttributeName")) + "\",\"" + (content || "") + "\"\n";
+      }      
+
+      if (!nodeRecord.get("isData")) {
+        var childrenNode = [];
+
+        nodeRecord.get("childrenNode").forEach(function(childNode) {
+          childrenNode.push(childNode);
+        });
+
+        childrenNode = _.sortBy(childrenNode, function(childNode){ return childNode.get("index"); });
+
+        childrenNode.forEach(function(childNode) {
+          append(childNode);
+        });        
+      }
+    };
+
+    var rootNodeRecord = this.get("nodes").findProperty("nodeType", "ItemContents");
+    append(rootNodeRecord); 
+
+    return csvString;
   }.property(
     "nodes.@each.index",
     "nodes.@each.attributeName",

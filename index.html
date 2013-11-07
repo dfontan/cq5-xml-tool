@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CQ5 Xml Toola</title>
+  <title>CQ5 Xml Tool</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="css/app.min.css" media="screen">
 </head>
@@ -60,7 +60,7 @@
             <tbody>
               {{#each}}
                 <tr>
-                  <td>{{name}}</td>
+                  <td>{{name}}.xml</td>
                   <td>{{locale}}</td>
                   <td>
                     {{#link-to 'file.index' this}}
@@ -321,7 +321,7 @@
     {{render "nav" this}}
     
     {{#view CQ5.RawXmlString}}
-      <h2>Converted Xml String</h2>    
+      <h2>Converted Xml String</h2>
       <pre id="xmlCode" class="prettyprint Lang-xml">{{convertedXmlString}}</pre>
     {{/view}}
   </script>

@@ -8,6 +8,7 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
   hasFile: function() {
     return this.get("model").get("length") > 0;
   }.property("model.@each"),
+
   createNodeRecordsFromTemplate: function(fileRecord, XmlTemplateDocument) {
     var nodeCount = 0;
     var store = this.get("store");
@@ -157,7 +158,8 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
         }
 
         files.forEach(function(file){
-          zip.file(file.get("name"), vkbeautify.xmlmin(file.get("convertedXmlString"), true));
+          zip.file(file.get("name") + ".xml", vkbeautify.xmlmin(file.get("convertedXmlString"), true));
+          zip.file(file.get("name") + ".csv", file.get("csvString"));
         });        
 
         if (files.get("length") > 0) {          
