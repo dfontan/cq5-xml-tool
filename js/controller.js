@@ -133,6 +133,7 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
     },
     fileDownload: function() {
       // Zip file generation
+      
       var hasError = false;
       this.get("store").find("file").then(function(files) {
         var zip = new JSZip();
@@ -159,10 +160,20 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
           zip.file(file.get("name"), vkbeautify.xmlmin(file.get("convertedXmlString"), true));
         });        
 
-        if (files.get("length") > 0) {
-          var content = zip.generate();
-          location.href="data:application/zip;base64," + content;
-          $("#messages").prepend('<div class="alert alert-success"><strong>Zip file has generated!</strong></div>');
+        if (files.get("length") > 0) {          
+          try {
+            // Blob
+            var blobLink = $('#fileDownload');
+            blobLink.attr('download', "xml.zip");
+            blobLink.attr('href', window.URL.createObjectURL(zip.generate({
+              type: "blob"
+            })));
+            blobLink.get(0).click();
+          } catch(e) {
+            var content = zip.generate();
+            location.href="data:application/zip;base64," + content;
+            $("#messages").prepend('<div class="alert alert-success"><strong>Zip file has generated!</strong></div>');
+          }          
         }        
       });
     }
