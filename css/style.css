@@ -85,3 +85,9 @@ ul.nav-tabs {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #dbc59e;
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #dbc59e;
 }
+
+textarea.form-control {
+    height: 34px;
+    resize: none;
+    padding: 7px 12px 6px;
+}

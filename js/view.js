@@ -112,6 +112,10 @@ CQ5.FileEditView = Ember.View.extend({
 });
 
 
-CQ5.TextFieldView = Ember.TextField.extend();
+CQ5.TextAreaView = Ember.TextArea.extend({
+  didInsertElement: function(evt) {
+    this.$().autosize();
+  }
+});
 
-Ember.Handlebars.helper('cq5-textfield', CQ5.TextFieldView);
+Ember.Handlebars.helper('cq5-textarea', CQ5.TextAreaView);

@@ -115,12 +115,12 @@ CQ5.localeManager.register(
               attributeName: 'TechnicalFeature' + fileRecord.get('technicalFeatureMaxIndex'),
               transAttributeName: $(this).find("groupName").text(),
               dataType: "string",
-            });
-            
+            });            
 
             record.get("childrenNode").addRecord(newRecord);
             fileRecord.get("nodes").addRecord(newRecord);
-
+            
+            fileRecord.set('technicalFeatureMaxIndex', fileRecord.get('technicalFeatureMaxIndex') + 1);
             func($(this), newRecord);
           } else if (e.nodeName == "technicalFeature") {
             var newRecord = store.createRecord('node', {

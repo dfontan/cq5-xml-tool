@@ -53,7 +53,7 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
       fileRecord.get("nodes").addRecord(nodeRecord);
       return nodeRecord;
     };
-
+    
     return createNodeRecord(XmlTemplateDocument.children());
   },
 
@@ -94,6 +94,7 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
     if (this.recognizeCQ5Xml(xmlDocument)) {
       var fileRecord = this.createFileRecord(xmlString);
       this.createNodeRecordsFromTemplate(fileRecord, xmlDocument);
+      fileRecord.get("nodes").findProperty("attributeName", "TechnicalFeature").set("transAttributeName", "TechnicalFeature");
       return;
     }
 
@@ -130,7 +131,7 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
           controller.createFile(file, xmlString);
         };
         fileReader.readAsText(file);
-      });      
+      }); 
     },
     fileDownload: function() {
       // Zip file generation

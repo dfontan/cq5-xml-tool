@@ -106,6 +106,7 @@ CQ5.localeManager.register(
             record.get("childrenNode").addRecord(newRecord);
             fileRecord.get("nodes").addRecord(newRecord);
             
+            fileRecord.set('technicalFeatureMaxIndex', fileRecord.get('technicalFeatureMaxIndex') + 1);
             func($(this), newRecord);
           } else if (e.nodeName == "feature") {
             var newRecord = store.createRecord('node', {

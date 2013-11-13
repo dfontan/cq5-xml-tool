@@ -12,7 +12,10 @@
     </div>
     <div id="footer">
       <div class="container">
-        <p class="text-muted credit">iNotes & Sametime : <a href="#">xuhangdl@cn.ibm.com</a></p>
+        <p class="text-muted">
+          You can download and use it locally.<br>
+          Lastest version: <a href="cq5-xml-tool-0.4-beta20131113.zip">cq5-xml-tool-0.4-beta20131113.zip</a><br>
+        </p>
       </div>
     </div>
   </script>
@@ -380,7 +383,7 @@
                     <td {{bind-attr style=tdStyle}}>{{attributeName}}</td>            
                     {{#if isData}}
                       <td style="border: 0px;" {{bind-attr class="isError:has-error isAlert:has-warning"}}>
-                      {{cq5-textfield class="form-control" value=nodeContent placeholder="..."}}
+                      {{cq5-textarea rows="1" class="form-control" value=nodeContent placeholder="..."}}
                       </td>
                     {{else}}
                       <td style="border: 0px; padding: 0px;">
@@ -401,18 +404,18 @@
     <table class="table table-bordered table-hover table-striped">
       <thead>
         <tr class="success">
-          <td style="width: 199px;">{{cq5-textfield class="form-control" value=newTransAttributeName placeholder="Trans Attr"}}</td>
-          <td>{{cq5-textfield class="form-control" value=newNodeContent placeholder="Content"}}</td>
+          <td style="width: 199px;">{{cq5-textarea class="form-control" value=newTransAttributeName placeholder="Trans Attr"}}</td>
+          <td>{{cq5-textarea class="form-control" value=newNodeContent placeholder="Content"}}</td>
           <td style="width: 30px;"><button type="button" class="btn btn-primary" {{action 'addNode' this}}>+</button></td>
         </tr>
       </thead>
       <tbody class="sortable">
         {{#each}}
           <tr class="item" data-id="{{unbound id}}">
-            <td>{{cq5-textfield class="form-control" value=transAttributeName placeholder="..."}}</td>            
+            <td>{{cq5-textarea class="form-control" value=transAttributeName placeholder="..."}}</td>            
             {{#if isData}}
               <td>
-              {{cq5-textfield class="form-control" value=nodeContent placeholder="..."}}
+              {{cq5-textarea class="form-control" value=nodeContent placeholder="..."}}
               </td>
             {{else}}
               <td style="padding: 0px;" class="techGroup">
