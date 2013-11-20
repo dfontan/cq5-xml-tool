@@ -29,19 +29,19 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
       });
 
       if (
-          element.attr("attributeName") == "Short Model Number" ||
-          element.attr("attributeName") == "Unified Model Number" ||
-          element.attr("attributeName") == "Model Name" ||
-          element.attr("attributeName") == "Model Number" ||
-          element.attr("attributeName") == "locale"
+          element.attr("nodeName") == "ShortModelNumber" ||
+          element.attr("nodeName") == "UnifiedModelNumber" ||
+          element.attr("nodeName") == "ModelName" ||
+          element.attr("nodeName") == "ModelNumber" ||
+          element.attr("nodeName") == "locale"
         ) {
         nodeRecord.set("isAllowBlank", false);
       }
 
       if (
-          element.attr("attributeName") == "Description For See All" ||
-          element.attr("attributeName") == "Product Image" ||
-          element.attr("attributeName") == "Variation Image for See All 1"
+          element.attr("nodeName") == "DescriptionForSeeAll" ||
+          element.attr("nodeName") == "ProductImage" ||
+          element.attr("nodeName") == "VariationImageforSeeAll1"
         ) {
         nodeRecord.set("isAlertBlank", true);
       }
@@ -95,6 +95,7 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
       var fileRecord = this.createFileRecord(xmlString);
       this.createNodeRecordsFromTemplate(fileRecord, xmlDocument);
       fileRecord.get("nodes").findProperty("attributeName", "TechnicalFeature").set("transAttributeName", "TechnicalFeature");
+      this.convert(fileRecord, xmlDocument, convertList);
       return;
     }
 
@@ -193,53 +194,54 @@ CQ5.FileEditController = Ember.ObjectController.extend({
   basicInfomation: function() {
     return this.get("model").get("nodes").filter(function(node) {
       return _.contains([
-        "Short Model Number",
-        "Unified Model Number",
+        "ShortModelNumber",
+        "UnifiedModelNumber",
         "catalogName",
         "Category",
-        "Overview"
-      ], node.get("attributeName"));
+        "Overview",
+        "Images"
+      ], node.get("nodeName"));
     });
   }.property("model"),
 
   features: function() {
-    return this.get("model").get("nodes").findProperty("attributeName", "Features").get("childrenNode");
+    return this.get("model").get("nodes").findProperty("nodeName", "Features").get("childrenNode");
   }.property("model"),
 
   generalData: function() {
-    return this.get("model").get("nodes").findProperty("attributeName", "GeneralData").get("childrenNode");
+    return this.get("model").get("nodes").findProperty("nodeName", "GeneralData").get("childrenNode");
   }.property("model"),
 
   marketingDescription: function() {
-    return this.get("model").get("nodes").findProperty("attributeName", "MarketingDescription").get("childrenNode");
+    return this.get("model").get("nodes").findProperty("nodeName", "MarketingDescription").get("childrenNode");
   }.property("model"),
 
   digitalAssets: function() {
-    return this.get("model").get("nodes").findProperty("attributeName", "DigitalAssets").get("childrenNode");
+    return this.get("model").get("nodes").findProperty("nodeName", "DigitalAssets").get("childrenNode");
   }.property("model"),
 
   getInspired: function() {
-    return this.get("model").get("nodes").findProperty("attributeName", "GetInspired").get("childrenNode");
+    return this.get("model").get("nodes").findProperty("nodeName", "GetInspired").get("childrenNode");
   }.property("model"),
 
   accessory: function() {
-    return this.get("model").get("nodes").findProperty("attributeName", "Accessory").get("childrenNode");
+    return this.get("model").get("nodes").findProperty("nodeName", "Accessory").get("childrenNode");
   }.property("model"),
 
   keyTechnicalFeature: function() {
-    return this.get("model").get("nodes").findProperty("attributeName", "KeyTechnicalFeature").get("childrenNode");
+    return this.get("model").get("nodes").findProperty("nodeName", "KeyTechnicalFeature").get("childrenNode");
   }.property("model"),
 
   faceted: function() {
-    return this.get("model").get("nodes").findProperty("attributeName", "Faceted").get("childrenNode");
+    return this.get("model").get("nodes").findProperty("nodeName", "Faceted").get("childrenNode");
   }.property("model"),
 
   variation: function() {
-    return this.get("model").get("nodes").findProperty("attributeName", "Variation").get("childrenNode");
+    return this.get("model").get("nodes").findProperty("nodeName", "Variation").get("childrenNode");
   }.property("model"),
 
   techRecords: function() {
-    return this.get("model").get("nodes").findProperty("attributeName", "TechnicalFeature").get("childrenNode");
+    return this.get("model").get("nodes").findProperty("nodeName", "TechnicalFeature").get("childrenNode");
   }.property("model")
 });
 
@@ -248,16 +250,17 @@ CQ5.FileIndexController = Ember.ObjectController.extend({
     var data = this.get("model").get("nodes").filter(function(node) {
       return _.contains([
         "locale",
-        "Display Model Number",
-        "Full Product Name",
-        "Short Model Number",
-        "Key Copy",
-        "Sub Copy",
-        "Description For See All",
+        "DisplayModelNumber",
+        "FullProductName",
+        "ShortModelNumber",
+        "KeyCopy",
+        "SubCopy",
+        "DescriptionForSeeAll",
         "catalogName",
         "Product Main Picture",
-        "Sub Brand Logo Image"
-      ], node.get("attributeName"));
+        "SubBrandLogoImage",
+        "Images"
+      ], node.get("nodeName"));
     });
 
     var isShow = false;
@@ -354,7 +357,7 @@ CQ5.FileIndexController = Ember.ObjectController.extend({
   }.property("model.nodes.@each.nodeContent"),
   
   getInspired: function() {
-    var data = this.get("model").get("nodes").findProperty("attributeName", "GetInspired").get("childrenNode");
+    var data = this.get("model").get("nodes").findProperty("nodeName", "GetInspired").get("childrenNode");
     var isShow = false;
 
     data.forEach(function(record) {
