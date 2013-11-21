@@ -219,6 +219,11 @@
       </div>
     {{/if}}
     
+    {{#if longDescription.isShow}}
+      <h2><span class="glyphicon glyphicon-camera"></span> Features </h2>
+      {{render "nodesBasicViewTable" longDescription.data}}
+    {{/if}}
+
     {{#if features.isShow}}
       <h2><span class="glyphicon glyphicon-camera"></span> Features </h2>
       {{render "featureTabs" features.data}}

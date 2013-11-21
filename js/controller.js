@@ -259,8 +259,7 @@ CQ5.FileIndexController = Ember.ObjectController.extend({
         "catalogName",
         "Product Main Picture",
         "SubBrandLogoImage",
-        "Images",
-        "LongDescription"
+        "Images"
       ], node.get("nodeName"));
     });
 
@@ -278,6 +277,23 @@ CQ5.FileIndexController = Ember.ObjectController.extend({
     }
   }.property("model.nodes.@each.nodeContent"),
   
+  longDescription: function() {
+    var data = this.get("model").get("nodes").findProperty("attributeName", "LongDescription").get("childrenNode");
+
+    var isShow = false;
+
+    data.forEach(function(record) {
+      if (!record.get("isNull")) {
+        isShow = true;
+      }
+    });
+
+    return {
+      isShow: isShow,
+      data: data
+    }
+  }.property("model.nodes.@each.nodeContent"),
+
   features: function() {
     var features = [];
     this.get("model").get("nodes").findProperty("attributeName", "Features").get("childrenNode").forEach(function(record, index) {
@@ -626,7 +642,11 @@ CQ5.NodesBasicEditTableController = Ember.ArrayController.extend({
       record.set("tdStyle", "width: " + width + "px; border-top: 0px; border-right: 1px solid #dddddd; padding-top: 16px; background-color: #f5f5f5;");
     });
     
-    return this.get("model");
+    return this.get("model").filter(function(node) {
+
+      console.log(node.get("attributeName") + " " + node.get("childrenNode").get("length"));
+      return node.get("isData") || node.get("childrenNode").get("length") > 0;    
+    });
   }.property("@each.nodeContent", "@each.level")
 });
 
