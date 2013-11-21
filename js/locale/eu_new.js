@@ -1,6 +1,6 @@
 CQ5.localeManager.register(
   function(xmlDoc) {
-    if (xmlDoc.find('data[nodeName="locale"]').text() === "cz_cs") {
+    if (xmlDoc.find('dataGroup[nodeName="DigitalAssets"]').text().trim().length > 0) {
       return true;
     }
   },[{
@@ -8,6 +8,11 @@ CQ5.localeManager.register(
     modifiedContent: function (store, node, xmlDoc) {
       var fileRecord = node.get("file");
       var uniqueID = uuid.v4();
+
+      if (node.get("childrenNode").findProperty("nodeName", "KeySpecsValue1")) {
+        return;
+      }
+
       for (var i = 0; i < 3; i++) {
         var keySpecs = store.createRecord('node', {
           id: uniqueID,
@@ -61,6 +66,10 @@ CQ5.localeManager.register(
       var fileRecord = node.get("file");
       var uniqueID = uuid.v4();
 
+      if (node.get("childrenNode").findProperty("nodeName", "VariationImageforSeeAll1")) {
+        return;
+      }
+
       var record = store.createRecord('node', {
         id: uniqueID,
         nodeType: "data",
@@ -91,11 +100,6 @@ CQ5.localeManager.register(
     modifiedContent: function (store, node, xmlDoc) {
       return $(xmlDoc).find('data[nodeName="ShortModelNumber"]:eq(0)').text() + " " +
              $(xmlDoc).find('data[nodeName="ModelName"]:eq(0)').text();
-    }
-  },{
-    attributeName: "Sub Copy",
-    modifiedContent: function (store, node, xmlDoc) {
-      return $(xmlDoc).find('data[nodeName="ShortDescription"]:eq(0)').text();
     }
   }]
 );

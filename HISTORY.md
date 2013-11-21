@@ -1,8 +1,11 @@
 # cq5-xml-tool
 
+## 0.5
+- Add support for new EU xml format.
+
 ## 0.4
 - Now, the textfield has been changed to textarea, with automatic resizing feature provided by @Yuan Dexin.
-- The value of node TechnicalFeature's transAttributeName attribute is now fixed to "TechnicalFeature"
+- The value of node TechnicalFeature's transAttributeName attribute is now fixed to "TechnicalFeature".
 
 ## 0.3
 - Some bugs fixed.

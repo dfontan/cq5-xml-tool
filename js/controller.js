@@ -259,7 +259,8 @@ CQ5.FileIndexController = Ember.ObjectController.extend({
         "catalogName",
         "Product Main Picture",
         "SubBrandLogoImage",
-        "Images"
+        "Images",
+        "LongDescription"
       ], node.get("nodeName"));
     });
 
