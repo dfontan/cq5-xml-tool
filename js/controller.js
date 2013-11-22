@@ -607,7 +607,7 @@ CQ5.NodesBasicEditTableController = Ember.ArrayController.extend({
     return this.get("model").filter(function(node) {
       return node.get("isData") || node.get("childrenNode").get("length") > 0;    
     });
-  }.property("@each.nodeContent", "@each.level")
+  }.property()
 });
 
 CQ5.NodesBasicViewTableController = Ember.ArrayController.extend({
