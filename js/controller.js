@@ -162,9 +162,9 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
         files.forEach(function(file){
           zip.file(file.get("name") + ".xml", vkbeautify.xmlmin(file.get("convertedXmlString"), true));
           zip.file(file.get("name") + ".csv", file.get("csvString"));
-        });        
+        });
 
-        if (files.get("length") > 0) {          
+        if (files.get("length") > 0) {
           try {
             // Blob
             var blobLink = $('#fileDownload');
@@ -172,12 +172,12 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
             blobLink.attr('href', window.URL.createObjectURL(zip.generate({
               type: "blob"
             })));
-            blobLink.get(0).click();
+            blobLink.get(0).click();            
           } catch(e) {
             var content = zip.generate();
-            location.href="data:application/zip;base64," + content;
-            $("#messages").prepend('<div class="alert alert-success"><strong>Zip file has generated!</strong></div>');
-          }          
+            location.href="data:application/zip;base64," + content;            
+          }
+          $("#messages").prepend('<div class="alert alert-success"><strong>Zip file has generated!</strong></div>');
         }        
       });
     }
@@ -489,44 +489,6 @@ CQ5.FileIndexController = Ember.ObjectController.extend({
     "model.nodes.@each.nodeContent"
   ),
   
-  /*basicInfomation: function() {
-    var data = this.get("model").get("nodes").filter(function(node) {
-      return _.contains([
-        "Short Model Number",
-        "Unified Model Number",
-        "catalogName",
-        "Category",
-        "GeneralData",
-        "MarketingDescription",
-        "DigitalAssets",
-        "Overview",
-        "Features",
-        "GetInspired",
-        "Accessory",
-        "KeyTechnicalFeature",
-        "Faceted",
-        "GetInspired",
-        "Accessory",
-        "KeyTechnicalFeature",
-        "Faceted",
-        "Variation"
-      ], node.get("attributeName"));
-    });
-
-    var isShow = false;
-
-    data.forEach(function(record) {
-      if (!record.get("isNull")) {
-        isShow = true;
-      }
-    });
-
-    return {
-      isShow: isShow,
-      data: data
-    }
-  }.property("model"),*/
-  
   seeAllSpecs: function() {
     var data = this.get("model").get("nodes").findProperty("attributeName", "TechnicalFeature").get("childrenNode");
     var isShow = false;
@@ -643,8 +605,6 @@ CQ5.NodesBasicEditTableController = Ember.ArrayController.extend({
     });
     
     return this.get("model").filter(function(node) {
-
-      console.log(node.get("attributeName") + " " + node.get("childrenNode").get("length"));
       return node.get("isData") || node.get("childrenNode").get("length") > 0;    
     });
   }.property("@each.nodeContent", "@each.level")
@@ -724,7 +684,6 @@ CQ5.NodesTechEditTableController = Ember.ArrayController.extend({
     }, this);
     
     nodeList.forEach(function(item) {
-      // console.log(item);
       var index = indexes[item.get('id')];
       item.set('index', index);
     }, this);

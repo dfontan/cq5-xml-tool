@@ -10,7 +10,7 @@ CQ5.localeManager.register(
       var uniqueID = uuid.v4();
 
       if (node.get("childrenNode").findProperty("nodeName", "KeySpecsValue1")) {
-        return;
+        return "";
       }
 
       for (var i = 0; i < 3; i++) {
@@ -67,7 +67,7 @@ CQ5.localeManager.register(
       var uniqueID = uuid.v4();
 
       if (node.get("childrenNode").findProperty("nodeName", "VariationImageforSeeAll1")) {
-        return;
+        return "";
       }
 
       var record = store.createRecord('node', {

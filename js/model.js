@@ -79,7 +79,7 @@ CQ5.File = DS.Model.extend({
 
     var append = function(nodeRecord) {
       if (nodeRecord.get("transAttributeName") !== undefined) {
-        if (nodeRecord.get("nodeContent") === null) {
+        if (!nodeRecord.get("nodeContent")) {
           content = "";
         } else {
           content = nodeRecord.get("nodeContent").replace("\"", "\"\"");
@@ -95,7 +95,7 @@ CQ5.File = DS.Model.extend({
           childrenNode.push(childNode);
         });
 
-        childrenNode = _.sortBy(childrenNode, function(childNode){ return childNode.get("index"); });
+        childrenNode = _.sortBy(childrenNode, function(childNode) { return childNode.get("index"); });
 
         childrenNode.forEach(function(childNode) {
           append(childNode);
