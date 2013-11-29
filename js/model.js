@@ -79,7 +79,7 @@ CQ5.File = DS.Model.extend({
 
     var append = function(nodeRecord) {
       if (nodeRecord.get("transAttributeName") !== undefined) {
-        if (nodeRecord.get("nodeContent") === null) {
+        if (!nodeRecord.get("nodeContent")) {
           content = "";
         } else {
           content = nodeRecord.get("nodeContent").replace("\"", "\"\"");
