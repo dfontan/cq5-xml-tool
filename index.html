@@ -4,6 +4,8 @@
   <title>CQ5 Xml Tool</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="css/app.min.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="css/alertify.core.css">
+  <link rel="stylesheet" type="text/css" href="css/alertify.bootstrap.css">
 </head>
 <body>  
   <script type="text/x-handlebars" data-template-name="files"> 
@@ -14,7 +16,7 @@
       <div class="container">
         <p class="text-muted">
           You can download and use it locally.<br>
-          Lastest version: <a href="cq5-xml-tool-1.0-stable20140115.zip">cq5-xml-tool-1.0-stable20140115.zip</a><br>
+          Lastest version: <a href="cq5-xml-tool-1.2-stable20140212.zip">cq5-xml-tool-1.2-stable20140212.zip</a><br>
         </p>
       </div>
     </div>
@@ -233,6 +235,11 @@
       <h2><span class="glyphicon glyphicon-picture"></span> Specification </h2>
       {{render "nodesBasicViewTable" specifications.data}}
     {{/if}}
+
+    {{#if keyTechnicalFeature.isShow}}
+      <h2><span class="glyphicon glyphicon-list"></span> Key Technical Feature </h2>
+      {{render "nodesBasicViewTable" keyTechnicalFeature.data}}
+    {{/if}}
     
     <!-- Button trigger modal -->
     {{#if seeAllSpecs.isShow}}
@@ -441,9 +448,8 @@
   <!-- Configuration files of Convert Feature -->
   <script src="js/locale/ru_ru.js"></script>
   <script src="js/locale/eu.js"></script>
-  <!--
   <script src="js/locale/eu_new.js"></script>
-  -->
+  <script src="js/libs/alertify.min.js"></script>
 
   <script type="text/javascript">
     // Back to top plugin

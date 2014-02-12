@@ -1,6 +1,6 @@
 CQ5.localeManager.register(
   function(xmlDoc) {
-    if (xmlDoc.find('dataGroup[nodeName="DigitalAssets"]').text().trim().length > 0) {
+    if (xmlDoc.find('dataGroup[nodeName="DigitalAssets"]').text().trim().length > 0 && xmlDoc.find('data[nodeName="KeyCopy"]').text().trim().length === 0) {
       return true;
     }
   },[{
@@ -24,7 +24,7 @@ CQ5.localeManager.register(
           attributeName: 'Key Specs ' + (i + 1),
           transAttributeName: 'Key Specs ' + (i + 1),
           dataType: "string",
-          nodeContent: $(xmlDoc).find('data[nodeName="SalesArgument"]:eq(' + i + ')').text()
+          nodeContent: $(xmlDoc).find('data[attributeName="Sales Argument"]:eq(' + i + ')').text()
         });
 
         var keySpecsValue = store.createRecord('node', {

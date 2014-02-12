@@ -388,6 +388,22 @@ CQ5.FileIndexController = Ember.ObjectController.extend({
       data: data
     }
   }.property("model.nodes.@each.nodeContent"),
+
+  keyTechnicalFeature: function() {
+    var data = this.get("model").get("nodes").findProperty("nodeName", "KeyTechnicalFeature").get("childrenNode");
+    var isShow = false;
+
+    data.forEach(function(record) {
+      if (!record.get("isNull")) {
+        isShow = true;
+      }
+    });
+    
+    return {
+      isShow: isShow,
+      data: data
+    }
+  }.property("model.nodes.@each.nodeContent"),
   
   accessoryItems: function() {
     var accessories = [];
