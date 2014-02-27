@@ -101,10 +101,16 @@ CQ5.FileEditView = Ember.View.extend({
   didInsertElement: function() {
     this.$("table").on('change', "tr textarea", function(e) {
       $(this).val($(this).val().replace(/\s+/g, ' ').trim()).trigger('autosize.resize');;
-
       var punctuationPatten = /([\uFF0C\u3002\uFF1F\uFF1A\uFF1B\u2018\u2019\uFF01\u201C\u201D\u2014\u2026\u2026\u3001\uFF0D\uFF08\uFF09\u3010\u3011\u300A\u300B]+)/g;
+        
       if (punctuationPatten.test($(this).val())) {
-        alertify.log("Chinese punctuation detected, if the site does not belong to the Chinese language, please remove the Chinese punctuation marks.");
+        console.log($(this));
+        if ($(this).parent().attr('not-allow-chinese') === 'not-allow-chinese') {
+          alert("Chinese punctuation is not allowed in this node!\nIt will be removed.");
+          $(this).val($(this).val().replace(punctuationPatten, ""));
+        } else {
+          alertify.log("Chinese punctuation detected, if the site does not belong to the Chinese language, please remove the Chinese punctuation marks.");
+        }
       }
 
       e.stopPropagation();

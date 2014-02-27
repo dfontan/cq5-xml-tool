@@ -1,5 +1,10 @@
 # cq5-xml-tool
 
+## 1.3 - stable
+- Some bug fixed.
+- Add a confim dialog which will show on browser closing or reloading.
+- Change back to top feature easing type.
+
 ## 1.2 - stable
 - Add "Key Technical Feature" in Preview view.
 - Fix convert feature for "New EU" format (Node "Key specs").

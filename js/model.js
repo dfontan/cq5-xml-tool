@@ -176,6 +176,8 @@ CQ5.Node = DS.Model.extend({
 
   isAllowBlank: DS.attr('boolean'),
 
+  notAllowChinese: DS.attr('boolean'),
+
   isError: function() {
     return !this.get("isAllowBlank") && this.get("isNull");
   }.property("nodeContent"),

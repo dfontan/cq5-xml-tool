@@ -25,6 +25,7 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
         dataType: element.attr("dataType"),
         isAllowBlank: true,
         isAlertBlank: false,
+        notAllowChinese: false,
         nodeContent: element[0].nodeName == "data" ? element.text().replace(/^\s+|\s+$/g,"") : null
       });
 
@@ -36,6 +37,7 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
           element.attr("nodeName") == "locale"
         ) {
         nodeRecord.set("isAllowBlank", false);
+        nodeRecord.set("notAllowChinese", true);
       }
 
       if (
@@ -45,6 +47,12 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
         ) {
         nodeRecord.set("isAlertBlank", true);
       }
+
+      if (nodeRecord.get('nodeName') && nodeRecord.get('nodeName').search(/TechnicalFeature\d+/) >= 0) {
+        if (parseInt(nodeRecord.get('nodeName').match(/\d+/)[0], 10) > fileRecord.get('technicalFeatureMaxIndex')) {
+          fileRecord.set('technicalFeatureMaxIndex', parseInt(nodeRecord.get('nodeName').match(/\d+/)[0], 10));
+        }
+      }
       
       element.children().each(function() {
         nodeRecord.get("childrenNode").addRecord(createNodeRecord($(this)));
@@ -53,6 +61,8 @@ CQ5.FilesIndexController = Ember.ArrayController.extend({
       fileRecord.get("nodes").addRecord(nodeRecord);
       return nodeRecord;
     };
+
+    fileRecord.set('technicalFeatureMaxIndex', 0);
     
     return createNodeRecord(XmlTemplateDocument.children());
   },
@@ -354,8 +364,15 @@ CQ5.FileIndexController = Ember.ObjectController.extend({
   specifications: function() {
     var data = this.get("model").get("nodes").filter(function(node) {
       return _.contains([
+        "Variation Image for See All 1",
+        "Key Specs 1",
+        "Key Specs Value 1",
+        "Key Specs 2",
+        "Key Specs Value 2",
+        "Key Specs 3",
+        "Key Specs Value 3",
         "Product Image",
-        "Variation Image for See All 1"
+        "SalesArguments"        
       ], node.get("attributeName"));
     });
 
@@ -375,22 +392,6 @@ CQ5.FileIndexController = Ember.ObjectController.extend({
   
   getInspired: function() {
     var data = this.get("model").get("nodes").findProperty("nodeName", "GetInspired").get("childrenNode");
-    var isShow = false;
-
-    data.forEach(function(record) {
-      if (!record.get("isNull")) {
-        isShow = true;
-      }
-    });
-    
-    return {
-      isShow: isShow,
-      data: data
-    }
-  }.property("model.nodes.@each.nodeContent"),
-
-  keyTechnicalFeature: function() {
-    var data = this.get("model").get("nodes").findProperty("nodeName", "KeyTechnicalFeature").get("childrenNode");
     var isShow = false;
 
     data.forEach(function(record) {
@@ -484,7 +485,7 @@ CQ5.FileIndexController = Ember.ObjectController.extend({
     var damPath = "";
     var pimPath = "";
 
-    damPath += "https://wcp.panasonic.net/siteadmin#/content/dam/pim/";
+    damPath += "https://wcp.panasonic.cn/siteadmin#/content/dam/pim/";
     damPath += locale.split("_")[0] + "/" + locale.split("_")[1] + "/";
     damPath += smn.slice(0, 2) + "/";
     damPath += smn.slice(0, 6) + "/" + smn;
@@ -662,10 +663,11 @@ CQ5.NodesTechEditTableController = Ember.ArrayController.extend({
         })(),
         isAllowBlank: true,
         isAlertBlank: false,
+        notAllowChinese: false,
         nodeType: this.get("newNodeContent") ? "data" : "dataGroup",
         isData: this.get("newNodeContent") !== "",
-        nodeName: 'TechnicalFeature' + fileRecord.get('technicalFeatureMaxIndex'),
-        attributeName: 'TechnicalFeature' + fileRecord.get('technicalFeatureMaxIndex'),
+        nodeName: 'TechnicalFeature' + (fileRecord.get('technicalFeatureMaxIndex') + 1),
+        attributeName: 'TechnicalFeature' + (fileRecord.get('technicalFeatureMaxIndex') + 1),
         transAttributeName: this.get("newTransAttributeName"),
         dataType: "string",
         nodeContent: this.get("newNodeContent")

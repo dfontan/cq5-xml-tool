@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="css/app.min.css" media="screen">
   <link rel="stylesheet" type="text/css" href="css/alertify.core.css">
-  <link rel="stylesheet" type="text/css" href="css/alertify.bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/alertify.default.css">
 </head>
 <body>  
   <script type="text/x-handlebars" data-template-name="files"> 
@@ -16,7 +16,7 @@
       <div class="container">
         <p class="text-muted">
           You can download and use it locally.<br>
-          Lastest version: <a href="cq5-xml-tool-1.2-stable20140212.zip">cq5-xml-tool-1.2-stable20140212.zip</a><br>
+          Lastest version: <a href="cq5-xml-tool-1.3-stable20140227.zip" target="_blank">cq5-xml-tool-1.3-stable20140227.zip</a><br>
         </p>
       </div>
     </div>
@@ -216,7 +216,7 @@
 
     {{#if path.isShow}}
       <div class="well well-sm">
-        <strong>DAM Link</strong><br><span class="text-primary">{{path.data.dam}}</span><br><br>
+        <strong>DAM Link</strong><br><a {{bind-attr href=path.data.dam}} target="_blank"><span class="text-primary">{{path.data.dam}}</span></a><br><br>
         <strong>PIM Link</strong><br><span class="text-primary">{{path.data.pim}}</span>
       </div>
     {{/if}}
@@ -234,11 +234,6 @@
     {{#if specifications.isShow}}
       <h2><span class="glyphicon glyphicon-picture"></span> Specification </h2>
       {{render "nodesBasicViewTable" specifications.data}}
-    {{/if}}
-
-    {{#if keyTechnicalFeature.isShow}}
-      <h2><span class="glyphicon glyphicon-list"></span> Key Technical Feature </h2>
-      {{render "nodesBasicViewTable" keyTechnicalFeature.data}}
     {{/if}}
     
     <!-- Button trigger modal -->
@@ -394,7 +389,7 @@
                   <tr>                    
                     <td {{bind-attr style=tdStyle}}>{{attributeName}}</td>            
                     {{#if isData}}
-                      <td style="border: 0px;" {{bind-attr class="isError:has-error isAlert:has-warning"}}>
+                      <td style="border: 0px;" {{bind-attr not-allow-chinese="notAllowChinese" class="isError:has-error isAlert:has-warning"}}>
                       {{cq5-textarea rows="1" class="form-control" value=nodeContent placeholder="..."}}
                       </td>
                     {{else}}
@@ -453,7 +448,14 @@
 
   <script type="text/javascript">
     // Back to top plugin
-    $().UItoTop({ easingType: 'easeOutQuart' });
+    $().UItoTop({
+      easingType: 'easeOutQuart',
+      scrollSpeed: 0
+    });
+
+    window.onbeforeunload = function(){ 
+      return "Hi,";
+    }
   </script>
 </body>
 </html>

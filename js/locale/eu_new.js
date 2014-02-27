@@ -3,7 +3,7 @@ CQ5.localeManager.register(
     if (xmlDoc.find('dataGroup[nodeName="DigitalAssets"]').text().trim().length > 0 && xmlDoc.find('data[nodeName="KeyCopy"]').text().trim().length === 0) {
       return true;
     }
-  },[{
+  },[/*{
     attributeName: "KeyTechnicalFeature",
     modifiedContent: function (store, node, xmlDoc) {
       var fileRecord = node.get("file");
@@ -45,7 +45,7 @@ CQ5.localeManager.register(
         fileRecord.get("nodes").addRecord(keySpecsValue);
       };      
     }
-  },{
+  }*/,{
     attributeName: "Description For See All",
     modifiedContent: function (store, node, xmlDoc) {
       return $(xmlDoc).find('data[nodeName="ShortDescription"]:eq(0)').text();
