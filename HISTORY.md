@@ -1,5 +1,10 @@
 # cq5-xml-tool
 
+## 1.4 - stable
+- Add a button ( top and bottom ).
+- Removed some bug fixed.
+- Add a confim dialog which will show on browser closing or reloading.
+
 ## 1.3 - stable
 - Some bug fixed.
 - Add a confim dialog which will show on browser closing or reloading.

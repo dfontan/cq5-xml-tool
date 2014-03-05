@@ -92,3 +92,15 @@ textarea.form-control {
     resize: none;
     padding: 7px 12px 6px;
 }
+
+#nav a:hover {
+  text-decoration: none;
+}
+
+/*Go to top & bottom!*/
+.go{width:47px;height:80px;background-color:#FFF;position:fixed;right:6px;top:25%;border-radius:5px;box-shadow:0 0 2px #6E6E6E;*border:solid 1px #ddd;}
+.go a{background:url(../img/retop.png) no-repeat;display:block;text-indent:999em;width:37px;margin:5px;border:0;overflow:hidden;float:left}
+.go .top{background-position:4px 7px;height:22px;float: left;margin-top: 6px;}
+.go .top:hover{background-position:-34px 7px;}
+.go .bottom{background-position:4px -56px;height:22px;float: left;margin-top: 20px;}
+.go .bottom:hover{background-position:-34px -56px}
